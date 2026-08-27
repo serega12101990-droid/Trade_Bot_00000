@@ -1,0 +1,39 @@
+# Секреты и локальные настройки
+.env*
+!.env.example
+!.env.*.example
+.dev.vars
+**/.dev.vars
+!**/.dev.vars.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.pnpm-store/
+
+# Логи и статистика (локальные артефакты)
+logs/
+*.log
+*.csv
+
+# Локальные базы, резервные копии и runtime-состояние
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+backups/
+.wrangler/
+.next/
+.vinext/
+dist/
+build/
+*.tsbuildinfo
+
+# Временные прогоны
+dryrun_stdout.txt

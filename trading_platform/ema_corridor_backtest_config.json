@@ -1,0 +1,8 @@
+{
+  "starting_equity": 10000.0,
+  "risk_per_trade_pct": 1.0,
+  "max_leverage": 1.0,
+  "max_holding_bars": 48,
+  "allow_overlapping_positions": false,
+  "out_of_sample_pct": 30.0
+}

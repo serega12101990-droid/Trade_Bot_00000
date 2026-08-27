@@ -1,0 +1,104 @@
+[
+  {
+    "profile_id": "D00_IMMEDIATE_ANY",
+    "description": "Диагностика: немедленный вход без подтверждений",
+    "entry_mode": "IMMEDIATE",
+    "context_mode": "ANY",
+    "min_net_rr": 0.5,
+    "diagnostic_only": true
+  },
+  {
+    "profile_id": "P01_MACD_IMMEDIATE",
+    "description": "Сжатие гистограммы к нулю или свежее пересечение MACD; вход сразу",
+    "entry_mode": "IMMEDIATE",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P02_MACD_PULLBACK50",
+    "description": "MACD-подтверждение и откат 50% к стартовой EMA",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P03_MACD_PULLBACK75",
+    "description": "MACD-подтверждение и более глубокий откат 75% к стартовой EMA",
+    "entry_mode": "PULLBACK_75",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P04_MACD_NISON_PULLBACK50",
+    "description": "MACD плюс направленная модель Нисона в окне шести свечей; откат 50%",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "require_nison": true,
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P05_MACD_NISON_PULLBACK75",
+    "description": "MACD плюс модель Нисона; откат 75%",
+    "entry_mode": "PULLBACK_75",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "require_nison": true,
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P06_MACD_VOLUME_PULLBACK50",
+    "description": "MACD и рост объёма перед пробоем либо объём пробойной свечи >= 1.3 среднего",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "volume_mode": "PRE_OR_BREAKOUT",
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P07_MACD_PREVOLUME_PULLBACK50",
+    "description": "MACD и рост среднего объёма до пробоя не менее 20%; откат 50%",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "volume_mode": "PRE_RISING",
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P08_MACD_AGGRESSIVE_VOLUME_PULLBACK50",
+    "description": "MACD, агрессивная пробойная свеча и подтверждение объёмом; откат 50%",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "require_aggressive_candle": true,
+    "volume_mode": "PRE_OR_BREAKOUT",
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P09_MACD_COMPRESSION_PULLBACK50",
+    "description": "MACD и сжатие/лежание цены у стартовой EMA; откат 50%",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "require_compression": true,
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P10_CROSS_NISON_PULLBACK50",
+    "description": "Только точное или свежее пересечение MACD плюс модель Нисона; откат 50%",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "RECENT_CROSS",
+    "require_nison": true,
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P11_PRECROSS_NISON_PULLBACK50",
+    "description": "Гистограмма стремится к нулю до пересечения плюс модель Нисона; откат 50%",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "PRE_CROSS",
+    "require_nison": true,
+    "min_net_rr": 0.5
+  },
+  {
+    "profile_id": "P12_MACD_NISON_PULLBACK50_RR1",
+    "description": "MACD плюс Нисон и минимальное расчётное соотношение прибыль/риск 1.0",
+    "entry_mode": "PULLBACK_50",
+    "context_mode": "CONTRACTION_OR_CROSS",
+    "require_nison": true,
+    "min_net_rr": 1.0
+  }
+]

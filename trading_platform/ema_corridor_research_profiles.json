@@ -1,0 +1,173 @@
+[
+  {
+    "id": "P01_STRICT_ALL",
+    "description": "Текущие строгие правила; препятствия всех ТФ",
+    "overrides": {}
+  },
+  {
+    "id": "P02_STRICT_SENIOR",
+    "description": "Строгие правила; обязательны EMA рабочего и старших ТФ",
+    "overrides": {"obstacle_timeframe_mode": "SAME_OR_HIGHER"}
+  },
+  {
+    "id": "P03_BALANCED_ALL",
+    "description": "R:R 1.0, net 0.20%; препятствия всех ТФ",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2}
+  },
+  {
+    "id": "P04_BALANCED_SENIOR",
+    "description": "R:R 1.0, net 0.20%; рабочий и старшие ТФ",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER"}
+  },
+  {
+    "id": "P05_FLEX_ALL",
+    "description": "R:R 0.8, net 0.15%; препятствия всех ТФ",
+    "overrides": {"min_net_rr": 0.8, "min_net_reward_pct": 0.15}
+  },
+  {
+    "id": "P06_FLEX_SENIOR",
+    "description": "R:R 0.8, net 0.15%; рабочий и старшие ТФ",
+    "overrides": {"min_net_rr": 0.8, "min_net_reward_pct": 0.15, "obstacle_timeframe_mode": "SAME_OR_HIGHER"}
+  },
+  {
+    "id": "P07_BALANCED_NO_MACD",
+    "description": "Сбалансированный профиль без обязательного MACD",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "require_macd_alignment": false}
+  },
+  {
+    "id": "P08_FLEX_NO_MACD",
+    "description": "Гибкий профиль без обязательного MACD",
+    "overrides": {"min_net_rr": 0.8, "min_net_reward_pct": 0.15, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "require_macd_alignment": false}
+  },
+  {
+    "id": "P09_BALANCED_STOP4",
+    "description": "Сбалансированный профиль; структурный стоп по 4 свечам",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_lookback": 4}
+  },
+  {
+    "id": "P10_BALANCED_STOP12",
+    "description": "Сбалансированный профиль; структурный стоп по 12 свечам",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_lookback": 12}
+  },
+  {
+    "id": "P11_STRICT_NO_MACD",
+    "description": "Строгий R:R без обязательного MACD; рабочий и старшие ТФ",
+    "overrides": {"obstacle_timeframe_mode": "SAME_OR_HIGHER", "require_macd_alignment": false}
+  },
+  {
+    "id": "P12_NISON_REQUIRED",
+    "description": "Сбалансированный профиль с обязательной свечной моделью",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "require_nison_pattern": true}
+  },
+  {
+    "id": "P13_BOUNDARY_STRICT",
+    "description": "Стоп за сигнальной свечой/стартовой EMA; строгий R:R",
+    "overrides": {"obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_SIGNAL"}
+  },
+  {
+    "id": "P14_BOUNDARY_BALANCED",
+    "description": "Стоп за сигнальной свечой/стартовой EMA; R:R 1.0",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_SIGNAL"}
+  },
+  {
+    "id": "P15_BOUNDARY_NO_MACD",
+    "description": "Стоп за сигнальной свечой/стартовой EMA; MACD измеряется, но не блокирует",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_SIGNAL", "require_macd_alignment": false}
+  },
+  {
+    "id": "P16_DIAGNOSTIC_OPEN",
+    "description": "Диагностический профиль почти без фильтров; не может быть выбран",
+    "diagnostic_only": true,
+    "overrides": {"min_net_rr": 0.0, "min_net_reward_pct": -10.0, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_SIGNAL", "require_macd_alignment": false}
+  },
+  {
+    "id": "P17_BOUNDARY_ONLY_STRICT",
+    "description": "Стоп только за стартовой EMA; строгий R:R и MACD",
+    "overrides": {"obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY"}
+  },
+  {
+    "id": "P18_BOUNDARY_ONLY_BALANCED",
+    "description": "Стоп только за стартовой EMA; R:R 1.0 и MACD",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY"}
+  },
+  {
+    "id": "P19_BOUNDARY_ONLY_NO_MACD",
+    "description": "Стоп только за стартовой EMA; R:R 1.0 без блокировки MACD",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_macd_alignment": false}
+  },
+  {
+    "id": "P20_RR05_MACD",
+    "description": "Исследование коротких коридоров: R:R 0.5, net 0.10%, MACD",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY"}
+  },
+  {
+    "id": "P21_RR05_NO_MACD",
+    "description": "Исследование коротких коридоров: R:R 0.5 без блокировки MACD",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_macd_alignment": false}
+  },
+  {
+    "id": "P22_RR03_NO_MACD",
+    "description": "Диагностика коротких коридоров: R:R 0.3 без блокировки MACD",
+    "overrides": {"min_net_rr": 0.3, "min_net_reward_pct": 0.05, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_macd_alignment": false}
+  },
+  {
+    "id": "P23_RR05_CROSS6",
+    "description": "R:R 0.5; пересечение MACD по направлению не старше 6 свечей",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_recent_macd_cross": true, "macd_cross_lookback": 6}
+  },
+  {
+    "id": "P24_RR05_CROSS12",
+    "description": "R:R 0.5; пересечение MACD по направлению не старше 12 свечей",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_recent_macd_cross": true, "macd_cross_lookback": 12}
+  },
+  {
+    "id": "P25_RR05_CROSS6_HIST",
+    "description": "R:R 0.5; недавнее пересечение и расширение гистограммы MACD",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_recent_macd_cross": true, "macd_cross_lookback": 6, "require_histogram_expansion": true}
+  },
+  {
+    "id": "P26_RR10_CROSS6",
+    "description": "R:R 1.0; пересечение MACD по направлению не старше 6 свечей",
+    "overrides": {"min_net_rr": 1.0, "min_net_reward_pct": 0.2, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_recent_macd_cross": true, "macd_cross_lookback": 6}
+  },
+  {
+    "id": "P27_RR05_NISON",
+    "description": "R:R 0.5; обязательна базовая подтверждающая модель Нисона",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_nison_pattern": true}
+  },
+  {
+    "id": "P28_RR05_TREND4H",
+    "description": "R:R 0.5; направление EMA20/50 на 4H",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_trend_alignment": true, "trend_filter_timeframes": [240], "trend_filter_mode": "EMA20_50"}
+  },
+  {
+    "id": "P29_RR05_TREND1D",
+    "description": "R:R 0.5; направление EMA20/50 на 1D",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_trend_alignment": true, "trend_filter_timeframes": [1440], "trend_filter_mode": "EMA20_50"}
+  },
+  {
+    "id": "P30_RR05_TREND4H1D",
+    "description": "R:R 0.5; одинаковое направление EMA20/50 на 4H и 1D",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_trend_alignment": true, "trend_filter_timeframes": [240, 1440], "trend_filter_mode": "EMA20_50"}
+  },
+  {
+    "id": "P31_RR05_TREND1W",
+    "description": "R:R 0.5; недельное направление EMA20/50",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_trend_alignment": true, "trend_filter_timeframes": [10080], "trend_filter_mode": "EMA20_50"}
+  },
+  {
+    "id": "P32_RR05_TREND4H_MACD",
+    "description": "R:R 0.5; EMA20/50 и MACD согласованы на 4H",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_trend_alignment": true, "trend_filter_timeframes": [240], "trend_filter_mode": "EMA_MACD"}
+  },
+  {
+    "id": "P33_CROSS6_TREND4H",
+    "description": "R:R 0.5; недавнее пересечение 30m и тренд EMA20/50 на 4H",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_recent_macd_cross": true, "macd_cross_lookback": 6, "require_trend_alignment": true, "trend_filter_timeframes": [240], "trend_filter_mode": "EMA20_50"}
+  },
+  {
+    "id": "P34_NISON_TREND4H",
+    "description": "R:R 0.5; модель Нисона и тренд EMA20/50 на 4H",
+    "overrides": {"min_net_rr": 0.5, "min_net_reward_pct": 0.1, "obstacle_timeframe_mode": "SAME_OR_HIGHER", "stop_mode": "BOUNDARY_ONLY", "require_nison_pattern": true, "require_trend_alignment": true, "trend_filter_timeframes": [240], "trend_filter_mode": "EMA20_50"}
+  }
+]
