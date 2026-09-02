@@ -169,6 +169,20 @@ export async function recordForecast(
   return { created: Boolean(result.meta.changes), id: result.meta.changes ? id : null, evaluated };
 }
 
+export async function findForecastRecordId(
+  symbol: string,
+  timeframe: Timeframe,
+  asofTime: number,
+  modelVersion = SCENARIO_MODEL_VERSION,
+) {
+  const db = await ensureForecastSchema();
+  const row = await db.prepare(`SELECT id FROM forecast_journal
+    WHERE model_version = ? AND symbol = ? AND timeframe = ? AND asof_time = ? LIMIT 1`)
+    .bind(modelVersion, symbol, timeframe, asofTime).first<{ id: string }>();
+  return row?.id ?? null;
+}
+
+
 function directionFromMove(move: number, threshold: number): ForecastDirection {
   if (move > threshold) return "BULL";
   if (move < -threshold) return "BEAR";

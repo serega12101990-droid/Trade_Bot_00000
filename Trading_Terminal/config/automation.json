@@ -1,0 +1,22 @@
+{
+  "timeframe": "4h",
+  "scanIntervalSeconds": 900,
+  "evaluationIntervalSeconds": 60,
+  "startupDelaySeconds": 8,
+  "concurrency": 3,
+  "fallbackAssets": [
+    { "symbol": "AAPL", "displaySymbol": "AAPL", "name": "Apple", "market": "stocks" },
+    { "symbol": "EURUSD", "displaySymbol": "EUR/USD", "name": "Евро / Доллар США", "market": "forex" },
+    { "symbol": "GBPUSD", "displaySymbol": "GBP/USD", "name": "Фунт стерлингов / Доллар США", "market": "forex" },
+    { "symbol": "USDJPY", "displaySymbol": "USD/JPY", "name": "Доллар США / Японская иена", "market": "forex" },
+    { "symbol": "USDCHF", "displaySymbol": "USD/CHF", "name": "Доллар США / Швейцарский франк", "market": "forex" },
+    { "symbol": "AUDUSD", "displaySymbol": "AUD/USD", "name": "Австралийский доллар / Доллар США", "market": "forex" },
+    { "symbol": "USDCAD", "displaySymbol": "USD/CAD", "name": "Доллар США / Канадский доллар", "market": "forex" },
+    { "symbol": "GC", "displaySymbol": "GC · Gold", "name": "Золото · непрерывный фьючерс", "market": "commodities" },
+    { "symbol": "SI", "displaySymbol": "SI · Silver", "name": "Серебро · непрерывный фьючерс", "market": "commodities" },
+    { "symbol": "CL", "displaySymbol": "CL · WTI", "name": "Нефть WTI · непрерывный фьючерс", "market": "commodities" },
+    { "symbol": "BZ", "displaySymbol": "BZ · Brent", "name": "Нефть Brent · непрерывный фьючерс", "market": "commodities" },
+    { "symbol": "NG", "displaySymbol": "NG · Natural Gas", "name": "Природный газ · непрерывный фьючерс", "market": "commodities" },
+    { "symbol": "HG", "displaySymbol": "HG · Copper", "name": "Медь · непрерывный фьючерс", "market": "commodities" }
+  ]
+}

@@ -5,5 +5,8 @@ interface Fetcher {
 type D1Database = import("drizzle-orm/d1").DrizzleD1Database<Record<string, never>>["$client"];
 
 declare module "cloudflare:workers" {
-  export const env: { DB?: D1Database };
+  export const env: {
+    DB?: D1Database;
+    NORTHSTAR_AUTOMATION_TOKEN?: string;
+  };
 }

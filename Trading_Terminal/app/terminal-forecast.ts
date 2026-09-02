@@ -3,6 +3,7 @@ import { projectMarketTimes } from "./market-calendar";
 import { detectMacdImpulseExhaustion } from "./experimental-strategies";
 import { analyzeVolumePrice } from "./vpa-analysis";
 import { analyzeLevelAction } from "./level-action-analysis";
+import { detectEmaWindowChannelShadow } from "./price-channel-shadow";
 import { strategyAgreement } from "./forecast-confluence";
 import type {
   Candle,
@@ -1073,6 +1074,7 @@ export function buildForecast(
   ];
   const primaryScenario = scenarios.find((scenario) => scenario.id === primaryId) ?? scenarios[1];
   const macdExhaustion = detectMacdImpulseExhaustion(candles, timeframe);
+  const emaWindowChannel = detectEmaWindowChannelShadow(allTimeframes["15m"] ?? (timeframe === "15m" ? candles : []));
   const vpaMatch: ForecastStrategyMatch | null = vpa ? {
     id: "vpa",
     label: "Объём и цена · VPA",
@@ -1121,6 +1123,7 @@ export function buildForecast(
   } : null;
   const strategyMatches: ForecastStrategyMatch[] = [
     ...(emaWindow ? [emaWindow] : []),
+    ...(emaWindowChannel ? [emaWindowChannel] : []),
     ...(macdExhaustion ? [macdExhaustion] : []),
     ...(legacyMacd ? [legacyMacd] : []),
     ...(nison ? [nison] : []),
@@ -1183,7 +1186,7 @@ export function buildForecast(
     calibration.samples,
     calibration.analogQuality,
     freshSignal,
-    strategyMatches.find((match) => match.id !== "mtf-entry" && match.id !== "vpa" && match.id !== "level-action" && match.state === "CONFIRMED" && match.direction === primary) ?? null,
+    strategyMatches.find((match) => match.id !== "mtf-entry" && match.id !== "vpa" && match.id !== "level-action" && match.id !== "ema-window-channel" && match.state === "CONFIRMED" && match.direction === primary) ?? null,
     strategyMatches.find((match) => match.id === "mtf-entry" && match.state === "CONFIRMED" && match.direction === primary) ?? null,
     executionSafety,
     agreement,

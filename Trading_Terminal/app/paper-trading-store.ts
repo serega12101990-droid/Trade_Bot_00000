@@ -195,6 +195,7 @@ type TradeRow = {
   shadow_target_hit?: number | null;
   shadow_invalidation_hit?: number | null;
   shadow_first_touch?: "TARGET" | "INVALIDATION" | "AMBIGUOUS" | "NONE" | null;
+  signal_price?: number | null;
   forecast_json?: string | null;
   created_at: number;
   updated_at: number;
@@ -209,6 +210,7 @@ type ReadyForecastRow = {
   asof_time: number;
   due_time: number;
   primary_direction: "BULL" | "SIDEWAYS" | "BEAR";
+  current_price: number;
   target_price: number;
   invalidation_price: number;
   forecast_json: string;
@@ -444,6 +446,36 @@ export function calculateManualPaperEntry(input: {
   };
 }
 
+export function calculateSignalPaperEntry(input: {
+  side: PaperTradeSide;
+  signalPrice: number;
+  targetPrice: number;
+  stopPrice: number;
+  balance: number;
+  riskPerTradePct: number;
+  maxOpenPositions: number;
+  feeBps: number;
+  quotePerUsdt: number;
+  lotSize?: number | null;
+}) {
+  // Statistical PAPER positions must preserve the model's own reference price.
+  // Fees remain in PnL, while live slippage and net R:R are diagnostics only.
+  return calculateManualPaperEntry({
+    side: input.side,
+    markPrice: input.signalPrice,
+    targetPrice: input.targetPrice,
+    stopPrice: input.stopPrice,
+    balance: input.balance,
+    riskPerTradePct: input.riskPerTradePct,
+    maxOpenPositions: input.maxOpenPositions,
+    feeBps: input.feeBps,
+    slippageBps: 0,
+    quotePerUsdt: input.quotePerUsdt,
+    lotSize: input.lotSize,
+    minimumNetRewardRisk: 0,
+  });
+}
+
 export function simulatePaperPosition(input: {
   side: PaperTradeSide;
   entryPrice: number;
@@ -640,7 +672,7 @@ export async function syncPaperCandidates() {
   if (!account.enabled || account.entry_mode !== "AUTO") return 0;
   const now = Date.now();
   const forecasts = await db.prepare(`SELECT f.id, f.model_version, f.symbol, f.market, f.timeframe,
-    f.asof_time, f.due_time, f.primary_direction, f.target_price, f.invalidation_price, f.forecast_json
+    f.asof_time, f.due_time, f.primary_direction, f.current_price, f.target_price, f.invalidation_price, f.forecast_json
     FROM forecast_journal f LEFT JOIN paper_trades p ON p.forecast_id = f.id
     WHERE p.id IS NULL AND f.model_version = ? AND f.status = 'PENDING' AND f.due_time > ?
     ORDER BY f.asof_time ASC LIMIT 500`)
@@ -772,6 +804,79 @@ function latestPaperMark(candles: Candle[]) {
 
 async function executionLotSize(trade: Pick<TradeRow, "market" | "symbol">) {
   return trade.market === "moex" ? getMoexLotSize(trade.symbol) : null;
+}
+
+async function openAutomaticCandidateAtSignal(db: D1, account: AccountRow, trade: TradeRow) {
+  const signalPrice = Number(trade.signal_price);
+  if (!Number.isFinite(signalPrice) || signalPrice <= 0) {
+    await skipTrade(db, trade.id, "NO_ENTRY_DATA");
+    return false;
+  }
+
+  const currency = paperCurrency(trade.market, account.rub_per_usdt, trade.symbol, signalPrice);
+  let lotSize: number | null = null;
+  try {
+    lotSize = await executionLotSize(trade);
+  } catch {
+    // A temporary metadata outage must not erase a READY statistical sample.
+    // The position is sized fractionally and the missing lot metadata remains
+    // a live-execution concern, not a paper-journal blocker.
+  }
+  const entry = calculateSignalPaperEntry({
+    side: trade.side,
+    signalPrice,
+    targetPrice: trade.target_price,
+    stopPrice: trade.stop_price,
+    balance: account.balance,
+    riskPerTradePct: account.risk_per_trade_pct,
+    maxOpenPositions: account.max_open_positions,
+    feeBps: account.fee_bps,
+    quotePerUsdt: currency.quotePerUsdt,
+    lotSize,
+  });
+  const executionShadow = assessPaperCandidateEntry({
+    side: trade.side,
+    markPrice: signalPrice,
+    targetPrice: trade.target_price,
+    stopPrice: trade.stop_price,
+    feeBps: account.fee_bps,
+    slippageBps: account.slippage_bps,
+    minimumNetRewardRisk: MINIMUM_ENTRY_NET_REWARD_RISK,
+  });
+  const executionWouldOpen = executionShadow.action === "OPEN";
+  const shadowDetail = executionWouldOpen
+    ? `Тень исполнения: вход допустим; чистая прибыль/риск ${executionShadow.economics.ratio.toFixed(2)}:1`
+    : `Тень исполнения: реальный вход ожидал бы лучшую цену; чистая прибыль/риск ${executionShadow.economics.ratio.toFixed(2)}:1`;
+  const now = Date.now();
+  const updated = await db.prepare(`UPDATE paper_trades SET status = 'OPEN', entry_time = ?, entry_time_source = 'SIGNAL_PRICE',
+    first_entry_time = ?, quote_currency = ?, fx_rate = ?, entry_price = ?, quantity = ?, notional = ?, risk_amount = ?,
+    fees = ?, fees_native = ?, unrealized_pnl = ?, unrealized_pnl_native = ?, unrealized_pnl_pct = ?, last_price = ?,
+    max_favorable_pct = 0, max_adverse_pct = 0, exit_reason = NULL, entry_block_reason = ?, entry_block_detail = ?,
+    entry_blocked_at = ?, last_processed_time = ?, updated_at = ? WHERE id = ? AND status = 'CANDIDATE'`).bind(
+      trade.signal_time, trade.signal_time, currency.quoteCurrency, currency.quotePerUsdt, entry.entryPrice,
+      entry.quantity, entry.notional, entry.riskAmount, entry.fees, entry.feesNative, entry.unrealizedPnl,
+      entry.unrealizedPnlNative, entry.unrealizedPnlPct, signalPrice,
+      executionWouldOpen ? null : "WAIT_BETTER_PRICE", shadowDetail,
+      executionWouldOpen ? null : now, trade.signal_time, now, trade.id,
+    ).run();
+  return Number(updated.meta.changes ?? 0) > 0;
+}
+
+async function openReadyCandidatesAtSignal(db: D1, account: AccountRow) {
+  const candidates = await db.prepare(`SELECT p.*, f.current_price AS signal_price
+    FROM paper_trades p JOIN forecast_journal f ON f.id = p.forecast_id
+    WHERE p.account_id = ? AND p.status = 'CANDIDATE' AND p.entry_source = 'AUTO'
+    ORDER BY p.signal_time ASC LIMIT 500`).bind(ACCOUNT_ID).all<TradeRow>();
+  let opened = 0;
+  for (const trade of candidates.results ?? []) {
+    try {
+      if (await openAutomaticCandidateAtSignal(db, account, trade)) opened += 1;
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "Некорректные данные цены сигнала";
+      await blockCandidate(db, trade, "QUOTE_UNAVAILABLE", `Не удалось восстановить вход по сигналу: ${detail}`);
+    }
+  }
+  return opened;
 }
 
 async function openManualCandidateNow(db: D1, account: AccountRow, trade: TradeRow, candles: Candle[]) {
@@ -1018,10 +1123,11 @@ async function runPaperEvaluation() {
   const queued = await syncPaperCandidates();
   let account = await accountRow(db);
   if (!account.enabled) return { queued, evaluated: 0 };
+  const openedAtSignal = account.entry_mode === "AUTO" ? await openReadyCandidatesAtSignal(db, account) : 0;
   const active = await db.prepare("SELECT * FROM paper_trades WHERE account_id = ? AND status IN ('CANDIDATE', 'OPEN') ORDER BY signal_time ASC LIMIT 100")
     .bind(ACCOUNT_ID).all<TradeRow>();
   const executionData = new Map<string, Awaited<ReturnType<typeof getExecutionMarketData>>>();
-  let evaluated = 0;
+  let evaluated = openedAtSignal;
   for (const trade of active.results ?? []) {
     if (trade.status === "CANDIDATE" && trade.due_time <= Date.now()) {
       await skipTrade(db, trade.id, "EXPIRED");
@@ -1339,7 +1445,7 @@ export async function openPaperRecommendation(forecastId: string, allowAddToPosi
   const account = await accountRow(db);
   if (!account.enabled) throw new Error("Сначала включите виртуальную торговлю");
   const row = await db.prepare(`SELECT id, model_version, symbol, market, timeframe, asof_time, due_time,
-    status, primary_direction, target_price, invalidation_price, forecast_json
+    status, primary_direction, current_price, target_price, invalidation_price, forecast_json
     FROM forecast_journal WHERE id = ? LIMIT 1`).bind(forecastId).first<ForecastStatusRow>();
   if (!row) throw new Error("Прогноз не найден");
   if (row.status !== "PENDING" || row.due_time <= Date.now()) throw new Error("Срок этого прогноза уже завершён");

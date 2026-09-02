@@ -60,6 +60,7 @@ const TIMEFRAME_SORT_ORDER: Record<Timeframe, number> = { "1m": 1, "5m": 5, "15m
 const PAPER_MARK_STALE_GRACE_MS = 30 * 60_000;
 const STRATEGY_FILTERS: Array<{ id: ForecastStrategyId; label: string; tone: ForecastStrategyMatch["tone"] }> = [
   { id: "ema-corridor", label: "EMA‑окно", tone: "violet" },
+  { id: "ema-window-channel", label: "EMA‑окно · канал", tone: "rose" },
   { id: "legacy-macd", label: "MACD", tone: "blue" },
   { id: "macd-exhaustion", label: "Угасание MACD", tone: "cyan" },
   { id: "opening-range-3", label: "Открытие NY · 3", tone: "rose" },
@@ -74,6 +75,20 @@ type JournalSortDirection = "asc" | "desc";
 type PaperTradeView = "active" | "closed" | "archive";
 type JournalScope = "current" | "trades" | "archive" | "all";
 type TerminalTab = "chart" | "scalping" | "news" | "forecastJournal" | "trades" | "research";
+type AutomationRuntimePayload = {
+  active: boolean;
+  watchlistCount: number;
+  lastHeartbeatAt: number | null;
+  lastRun: {
+    status: "RUNNING" | "COMPLETED" | "FAILED";
+    startedAt: number;
+    finishedAt?: number;
+    total: number;
+    completed: number;
+    created: number;
+    failed: number;
+  } | null;
+};
 type SavedTerminalView = {
   activeTab: TerminalTab;
   selectedSymbol: string;
@@ -372,6 +387,7 @@ function formatQuantity(value: number | null | undefined) {
 
 function paperTimeSourceLabel(source: PaperTradeTimeSource | null | undefined, kind: "entry" | "exit") {
   if (source === "MANUAL_ACTION") return kind === "entry" ? "время ручной команды" : "время ручного закрытия";
+  if (source === "SIGNAL_PRICE") return "цена и время прогноза";
   if (source === "EXECUTION_MARK") return "исполнено по доступной котировке";
   if (source === "ONE_MINUTE_CANDLE") return "касание цены · точность 1 мин";
   if (source === "RECOVERED_MARKET_DATA") return "восстановлено по биржевым данным";
@@ -597,6 +613,7 @@ export function TradingTerminal() {
   const [paperActionId, setPaperActionId] = useState<string | null>(null);
   const [paperTradeActionId, setPaperTradeActionId] = useState<string | null>(null);
   const [paperActionMessage, setPaperActionMessage] = useState<string | null>(null);
+  const [automationRuntime, setAutomationRuntime] = useState<AutomationRuntimePayload | null>(null);
   const [paperTradeView, setPaperTradeView] = useState<PaperTradeView>("active");
   const [terminalViewRestored, setTerminalViewRestored] = useState(false);
   const [liveSeriesByTimeframe, setLiveSeriesByTimeframe] = useState<Partial<Record<Timeframe, {
@@ -608,6 +625,7 @@ export function TradingTerminal() {
   }>>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const lastJournalKeyRef = useRef("");
+  const lastAutomationWatchlistSyncRef = useRef("");
   const journalTableWrapRef = useRef<HTMLDivElement>(null);
 
   const journalTableWidth = JOURNAL_COLUMN_KEYS.reduce((sum, key) => sum + journalColumnWidths[key], 0);
@@ -674,6 +692,61 @@ export function TradingTerminal() {
         setEnabledStrategies(new Set(data.strategies.filter((item) => item.enabled).map((item) => item.id)));
       })
       .catch((error: Error) => setLoadError(error.message));
+  }, []);
+
+  const automationWatchlistSignature = useMemo(() => snapshot?.assets
+    .map((asset) => `${asset.market}:${asset.symbol}:${asset.name}`)
+    .join("|") ?? "", [snapshot?.assets]);
+
+  useEffect(() => {
+    if (!snapshot?.assets.length || !automationWatchlistSignature) return;
+    if (lastAutomationWatchlistSyncRef.current === automationWatchlistSignature) return;
+    lastAutomationWatchlistSyncRef.current = automationWatchlistSignature;
+    let disposed = false;
+    const sync = async () => {
+      try {
+        const response = await fetch("/api/automation/status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "sync-watchlist",
+            assets: snapshot.assets.map((asset) => ({
+              symbol: asset.symbol,
+              market: asset.market,
+              displaySymbol: asset.displaySymbol,
+              name: asset.name,
+              signal: asset.signal ?? null,
+            })),
+          }),
+        });
+        const payload = await response.json() as AutomationRuntimePayload;
+        if (!disposed && response.ok) setAutomationRuntime(payload);
+      } catch {
+        lastAutomationWatchlistSyncRef.current = "";
+        // Ручной терминал остаётся доступен, даже если локальный автосканер выключен.
+      }
+    };
+    void sync();
+    return () => { disposed = true; };
+  }, [automationWatchlistSignature, snapshot?.assets]);
+
+  useEffect(() => {
+    let disposed = false;
+    const load = async () => {
+      try {
+        const response = await fetch("/api/automation/status", { cache: "no-store" });
+        const payload = await response.json() as AutomationRuntimePayload;
+        if (!disposed && response.ok) setAutomationRuntime(payload);
+      } catch {
+        // Статус восстановится при следующем успешном опросе.
+      }
+    };
+    void load();
+    const timer = window.setInterval(load, 30_000);
+    return () => {
+      disposed = true;
+      window.clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -1312,7 +1385,7 @@ export function TradingTerminal() {
 
     const calculateAsset = async (asset: Asset) => {
       try {
-        const requestedTimeframes = Array.from(new Set<Timeframe>([batchTimeframe, "5m", "1m"]));
+        const requestedTimeframes = Array.from(new Set<Timeframe>([batchTimeframe, "15m", "5m", "1m"]));
         const fetched = await Promise.all(requestedTimeframes.map(async (requestedTimeframe) => {
           const params = new URLSearchParams({ symbol: asset.symbol, market: asset.market, timeframe: requestedTimeframe });
           const response = await fetch(`/api/market-data?${params}`, { cache: "no-store" });
@@ -1997,7 +2070,7 @@ export function TradingTerminal() {
           {activeTab === "forecastJournal" && (
             <section className="content-view forecast-journal-view">
               <div className="content-heading">
-                <div><p className="eyebrow">ЖУРНАЛ МОДЕЛИ</p><h2>Прогнозы и автоматическая оценка</h2></div>
+                <div><p className="eyebrow">ЖУРНАЛ МОДЕЛИ</p><h2>Прогнозы и автоматическая оценка</h2><small>{automationRuntime?.active ? `Автосканер работает · ${automationRuntime.watchlistCount} инструментов · последний цикл ${formatDateTime(automationRuntime.lastRun?.finishedAt ?? automationRuntime.lastHeartbeatAt, timezone)}` : `Автосканер ожидает локальный запуск · синхронизировано ${automationRuntime?.watchlistCount ?? snapshot.assets.length}`}</small></div>
                 <button className="primary-button" disabled={journalLoading} onClick={() => void loadJournal(true)}>{journalLoading ? "Проверяю…" : "Обновить оценки"}</button>
               </div>
               {journalError && <div className="journal-error">{journalError}</div>}

@@ -8,8 +8,10 @@ const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
 
 const { d1, r2 } = hostingConfig;
 const alphaVantageApiKey = process.env.ALPHA_VANTAGE_API_KEY?.trim();
+const automationToken = process.env.NORTHSTAR_AUTOMATION_TOKEN?.trim();
 const localVars: Record<string, string> = {};
 if (alphaVantageApiKey) localVars.ALPHA_VANTAGE_API_KEY = alphaVantageApiKey;
+if (automationToken) localVars.NORTHSTAR_AUTOMATION_TOKEN = automationToken;
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";

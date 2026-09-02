@@ -50,3 +50,22 @@ test("missing and weak opposite strategies stay neutral while confirmed oppositi
     assert.equal(conflict.confirmedConflicts.length, 1);
   });
 });
+
+test("the shadow price channel never blocks or strengthens a forecast decision", async () => {
+  await withConfluence(({ strategyAgreement }) => {
+    const shadow = {
+      id: "ema-window-channel",
+      label: "EMA‑окно · канал",
+      shortLabel: "КАНАЛ",
+      tone: "rose",
+      state: "CONFIRMED",
+      direction: "BEAR",
+      summary: "Подтверждённый выход вниз",
+      experimental: true,
+    };
+    const result = strategyAgreement("BULL", [shadow]);
+    assert.equal(result.blocked, false);
+    assert.equal(result.alignedConfirmed.length, 0);
+    assert.equal(result.confirmedConflicts.length, 0);
+  });
+});

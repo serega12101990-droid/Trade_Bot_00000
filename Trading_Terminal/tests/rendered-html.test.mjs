@@ -67,6 +67,19 @@ test("ticker news has durable cache and a local secret template", async () => {
   assert.match(terminal, />Новости<\/button>/);
 });
 
+test("local forecast automation runs independently from the browser and keeps a manual fallback", async () => {
+  const launcher = await readFile(new URL("../scripts/start_terminal.py", import.meta.url), "utf8");
+  const daemon = await readFile(new URL("../scripts/automation_daemon.mjs", import.meta.url), "utf8");
+  const scanRoute = await readFile(new URL("../app/api/automation/scan/route.ts", import.meta.url), "utf8");
+  const terminal = await readFile(new URL("../app/trading-terminal.tsx", import.meta.url), "utf8");
+  assert.match(launcher, /start_automation_daemon/);
+  assert.match(daemon, /api\/automation\/scan/);
+  assert.match(daemon, /api\/paper-trades\?evaluate=1/);
+  assert.match(scanRoute, /authorizeAutomationRequest/);
+  assert.match(terminal, /Создать прогнозы/);
+  assert.match(terminal, /Автосканер работает/);
+});
+
 test("terminal includes a separate safe scalping workspace", async () => {
   const terminal = await readFile(new URL("../app/trading-terminal.tsx", import.meta.url), "utf8");
   const workspace = await readFile(new URL("../app/scalping-workspace.tsx", import.meta.url), "utf8");
@@ -121,14 +134,28 @@ test("scalping journal is durable and new trades keep an auditable signal snapsh
   assert.match(engine, /EMA и MACD 15м/);
 });
 
-test("current strategies use live 1m and 5m entry confirmations", async () => {
+test("current strategies use live 15m context with 1m and 5m entry confirmations", async () => {
   const terminal = await readFile(new URL("../app/trading-terminal.tsx", import.meta.url), "utf8");
   const forecast = await readFile(new URL("../app/terminal-forecast.ts", import.meta.url), "utf8");
-  assert.match(terminal, /\[batchTimeframe, "5m", "1m"\]/);
+  assert.match(terminal, /\[batchTimeframe, "15m", "5m", "1m"\]/);
   assert.match(forecast, /detectLegacyMacdStrategy/);
   assert.match(forecast, /detectNisonStrategy/);
   assert.match(forecast, /detectMtfEntryStrategy/);
   assert.match(forecast, /scenario-v1\.5\.0/);
+});
+
+test("EMA-window channel is visible, journaled, audited separately, and stays shadow-only", async () => {
+  const terminal = await readFile(new URL("../app/trading-terminal.tsx", import.meta.url), "utf8");
+  const forecast = await readFile(new URL("../app/terminal-forecast.ts", import.meta.url), "utf8");
+  const confluence = await readFile(new URL("../app/forecast-confluence.ts", import.meta.url), "utf8");
+  const attribution = await readFile(new URL("../app/paper-trading-store.ts", import.meta.url), "utf8");
+  const audit = await readFile(new URL("../scripts/audit_confluence.mjs", import.meta.url), "utf8");
+  assert.match(terminal, /ema-window-channel/);
+  assert.match(forecast, /detectEmaWindowChannelShadow/);
+  assert.doesNotMatch(confluence, /"ema-window-channel"/);
+  assert.doesNotMatch(attribution.match(/ATTRIBUTABLE_STRATEGIES[\s\S]*?\]\);/)?.[0] ?? "", /ema-window-channel/);
+  assert.match(audit, /emaWindowChannelShadow/);
+  assert.match(audit, /SHADOW_ONLY/);
 });
 
 test("forecast journal symbols open the matching chart and timeframe", async () => {

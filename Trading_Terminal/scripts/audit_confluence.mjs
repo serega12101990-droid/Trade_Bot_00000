@@ -68,8 +68,64 @@ function stopPlacementSample(rows) {
   };
 }
 
+function priceChannelAudit(rows) {
+  const observations = rows.flatMap((row) => {
+    const forecast = parseForecast(row.forecast_json);
+    const match = (forecast.strategyMatches ?? []).find((item) => item.id === "ema-window-channel");
+    return match ? [{ ...row, match, channel: match.priceChannel ?? {} }] : [];
+  });
+  const setupKeys = new Set(observations.map((row) => `${row.market}:${row.symbol}:${row.channel.startTime ?? row.match.trial?.signalTime ?? "unknown"}`));
+  const directional = observations.filter((row) => row.status === "EVALUATED" && row.match.direction !== "SIDEWAYS" && row.actual_direction);
+  const trialRows = observations.filter((row) => row.match.trial);
+  const evaluatedTrials = trialRows.filter((row) => row.match.trial?.result);
+  const wins = evaluatedTrials.filter((row) => row.match.trial.result.outcome === "WIN");
+  const losses = evaluatedTrials.filter((row) => row.match.trial.result.outcome === "LOSS" || row.match.trial.result.outcome === "AMBIGUOUS");
+  const phaseCounts = new Map();
+  const marketCounts = new Map();
+  observations.forEach((row) => {
+    const phase = row.channel.phase ?? "UNKNOWN";
+    phaseCounts.set(phase, (phaseCounts.get(phase) ?? 0) + 1);
+    marketCounts.set(row.market, (marketCounts.get(row.market) ?? 0) + 1);
+  });
+  const average = (selector) => evaluatedTrials.length
+    ? evaluatedTrials.reduce((sum, row) => sum + Number(selector(row) ?? 0), 0) / evaluatedTrials.length
+    : null;
+  return {
+    mode: "SHADOW_ONLY",
+    version: "ema-window-channel-v1",
+    observations: observations.length,
+    independentSetupsApprox: setupKeys.size,
+    pendingObservations: observations.filter((row) => row.status === "PENDING").length,
+    evaluatedObservations: observations.filter((row) => row.status === "EVALUATED").length,
+    confirmedBreakouts: observations.filter((row) => row.channel.phase === "BREAKOUT_DOWN").length,
+    contextDirectionAccuracyPct: directional.length
+      ? directional.filter((row) => row.actual_direction === row.match.direction).length / directional.length * 100
+      : null,
+    trials: {
+      opened: trialRows.length,
+      pending: trialRows.length - evaluatedTrials.length,
+      evaluated: evaluatedTrials.length,
+      wins: wins.length,
+      losses: losses.length,
+      flat: evaluatedTrials.filter((row) => row.match.trial.result.outcome === "FLAT").length,
+      winRatePct: evaluatedTrials.length ? wins.length / evaluatedTrials.length * 100 : null,
+      averageReturnPct: average((row) => row.match.trial.result.returnPct),
+      averageMfePct: average((row) => row.match.trial.result.maxFavorablePct),
+      averageMaePct: average((row) => row.match.trial.result.maxAdversePct),
+    },
+    byPhase: Object.fromEntries([...phaseCounts.entries()].sort((left, right) => right[1] - left[1])),
+    byMarket: Object.fromEntries([...marketCounts.entries()].sort((left, right) => right[1] - left[1])),
+    smallSample: evaluatedTrials.length < 30,
+    sampleNote: evaluatedTrials.length < 30
+      ? `Малая выборка: оценено ${evaluatedTrials.length} из рекомендуемых минимум 30 независимых выходов. Правила торговли менять рано.`
+      : "Минимальный порог 30 оценённых выходов достигнут; результат всё ещё требует проверки на независимой выборке.",
+  };
+}
+
 const evaluated = db.prepare(`SELECT primary_direction, correct, actual_return_pct, forecast_json
   FROM forecast_journal WHERE status = 'EVALUATED'`).all();
+const allForecasts = db.prepare(`SELECT symbol, market, timeframe, status, actual_direction, forecast_json
+  FROM forecast_journal ORDER BY asof_time`).all();
 const closedTrades = db.prepare(`SELECT p.symbol, p.timeframe, p.side, p.entry_source, p.realized_pnl, p.pnl_pct,
   p.max_favorable_pct, p.max_adverse_pct, p.exit_reason, f.primary_direction, f.forecast_json
   FROM paper_trades p JOIN forecast_journal f ON f.id = p.forecast_id
@@ -120,6 +176,7 @@ const result = {
     "Архив старых моделей не содержит полного набора 1м/5м свечей, поэтому MTF для них чаще недоступен.",
     "Теневой тест сопровождения использует фактический максимум прибыли и не моделирует гэпы и внутрисвечной порядок касаний.",
     "Теневой тест узкого SL использует MAE: он показывает, каких победителей выбило бы, но без тиков не доказывает точный порядок движения внутри свечи.",
+    "EMA‑окно · канал учитывается отдельно и не участвует в разрешении, блокировке или атрибуции реальных и виртуальных сделок.",
     "Выборка закрытых сделок мала; результаты нельзя превращать в обязательный фильтр без новых наблюдений.",
   ],
   forecastsByConfluence: [...forecastBuckets.entries()].sort((a, b) => a[0] - b[0]).map(([score, bucket]) => ({
@@ -156,6 +213,7 @@ const result = {
     })),
   },
   shadowExitRules: shadowRules,
+  emaWindowChannelShadow: priceChannelAudit(allForecasts),
   stopPlacementAudit: {
     paper: stopPlacementSample(tradeRows),
     scalpingCurrentVersion: stopPlacementSample(closedScalps.filter((row) => row.strategy_version === "scalp-micro-v4.1")),

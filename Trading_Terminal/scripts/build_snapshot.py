@@ -356,6 +356,17 @@ def load_strategy_registry() -> list[dict[str, Any]]:
             "enabled": True,
         },
         {
+            "id": "ema-window-channel",
+            "name": "EMA‑окно · нисходящий ценовой канал",
+            "shortName": "КАНАЛ",
+            "status": "research",
+            "statusLabel": "Теневой анализ",
+            "description": "Ищет нисходящий параллельный канал после импульсного роста, тесты его границ и подтверждённый выход вниз. Не влияет на разрешение или блокировку сделок.",
+            "winRate": None,
+            "expectancy": None,
+            "enabled": True,
+        },
+        {
             "id": "mtf-entry",
             "name": "SETUP → CONTEXT → ENTRY",
             "shortName": "MTF",

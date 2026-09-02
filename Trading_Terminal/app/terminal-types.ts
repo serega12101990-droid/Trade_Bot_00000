@@ -135,7 +135,7 @@ export type IndicatorPack = {
 export type ForecastDirection = "BULL" | "SIDEWAYS" | "BEAR";
 export type ForecastDecision = "READY" | "WAIT_CONFIRMATION" | "NO_TRADE";
 export type MarketRegime = "TREND_UP" | "TREND_DOWN" | "RANGE" | "COMPRESSION" | "TRANSITION";
-export type ForecastStrategyId = "ema-corridor" | "legacy-macd" | "macd-exhaustion" | "opening-range-3" | "mtf-entry" | "nison" | "vpa" | "level-action" | "scenario-forecast";
+export type ForecastStrategyId = "ema-corridor" | "ema-window-channel" | "legacy-macd" | "macd-exhaustion" | "opening-range-3" | "mtf-entry" | "nison" | "vpa" | "level-action" | "scenario-forecast";
 export type ForecastStrategyTone = "violet" | "blue" | "cyan" | "rose" | "teal" | "amber" | "lime" | "gold" | "slate";
 
 export type VpaEventId = "CONFIRMED_IMPULSE" | "WEAK_PULLBACK" | "ABSORPTION" | "STOPPING_VOLUME" | "CONFIRMED_BREAKOUT" | "FALSE_BREAKOUT" | "NEUTRAL";
@@ -242,6 +242,30 @@ export type EntryTimeframeConfirmation = {
   summary: string;
 };
 
+export type PriceChannelPhase = "INSIDE" | "UPPER_TEST" | "LOWER_TEST" | "FALSE_BREAK_UP" | "BREAKOUT_DOWN" | "INVALIDATED_UP";
+
+export type PriceChannelSnapshot = {
+  version: "ema-window-channel-v1";
+  asofTime: number;
+  startTime: number;
+  timeframe: "15m";
+  phase: PriceChannelPhase;
+  qualityScore: number;
+  rSquared: number;
+  coveragePct: number;
+  slopePctPerBar: number;
+  widthAtr: number;
+  upperTouches: number;
+  lowerTouches: number;
+  upperPrice: number;
+  middlePrice: number;
+  lowerPrice: number;
+  priorImpulseAtr: number;
+  volumeRatio: number | null;
+  emaAligned: boolean;
+  macdAligned: boolean;
+};
+
 export type ForecastStrategyMatch = {
   id: ForecastStrategyId;
   label: string;
@@ -265,6 +289,7 @@ export type ForecastStrategyMatch = {
   trendHeldBeforeBreak?: boolean;
   momentumExhaustion?: boolean;
   breakoutVolumeRatio?: number | null;
+  priceChannel?: PriceChannelSnapshot;
   experimental?: boolean;
   trial?: ForecastStrategyTrial;
 };
@@ -414,7 +439,7 @@ export type PaperEntryMode = "MANUAL" | "AUTO";
 export type PaperEntrySource = "MANUAL" | "MANUAL_WAIT" | "MANUAL_ADD" | "AUTO";
 export type PaperEntryBlockReason = "MARKET_CLOSED" | "QUOTE_UNAVAILABLE" | "STALE_QUOTE" | "WAIT_BETTER_PRICE" | "PRICE_OUTSIDE_LEVELS" | "POSITION_LIMIT" | "DUPLICATE_SYMBOL" | null;
 export type PaperQuoteCurrency = "USDT" | "USD" | "RUB" | "JPY" | "CHF" | "CAD";
-export type PaperTradeTimeSource = "TIMEFRAME_CANDLE" | "EXECUTION_MARK" | "ONE_MINUTE_CANDLE" | "MANUAL_ACTION" | "RECOVERED_MARKET_DATA";
+export type PaperTradeTimeSource = "TIMEFRAME_CANDLE" | "SIGNAL_PRICE" | "EXECUTION_MARK" | "ONE_MINUTE_CANDLE" | "MANUAL_ACTION" | "RECOVERED_MARKET_DATA";
 export type PaperShadowOutcome = "WIN" | "LOSS" | "FLAT";
 export type PaperTradeExitReason = "TP" | "SL" | "AMBIGUOUS_SL" | "EXPIRED" | "MANUAL_CLOSE" | "INVALID_LEVELS" | "LOW_NET_REWARD_RISK" | "PRE_ENTRY_INVALIDATION" | "TARGET_PASSED_BEFORE_ENTRY" | "POSITION_LIMIT" | "DUPLICATE_SYMBOL" | "NO_ENTRY_DATA" | "CURRENCY_MISMATCH" | "MERGED_POSITION" | "POSITION_CLOSED_BEFORE_ADD" | "OPPOSITE_POSITION" | "DATA_GAP_VOID" | "INVALID_EXECUTION" | null;
 

@@ -12,6 +12,8 @@
     "test": "vinext build && node --test tests/*.test.mjs",
     "audit:weekly": "node scripts/audit_confluence.mjs",
     "audit:confluence": "node scripts/audit_confluence.mjs",
+    "automation:once": "node scripts/automation_daemon.mjs --once",
+    "automation:start": "node scripts/automation_daemon.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "node -r ./scripts/node_userinfo_shim.cjs ./node_modules/drizzle-kit/bin.cjs generate"
   },

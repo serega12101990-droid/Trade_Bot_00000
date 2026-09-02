@@ -102,6 +102,36 @@ def run_paper_evaluator(url: str, process: subprocess.Popen[bytes] | None, port:
             time.sleep(1)
 
 
+def automation_enabled(environment: dict[str, str]) -> bool:
+    value = environment.get("NORTHSTAR_AUTOMATION_ENABLED", "1").strip().lower()
+    return value not in {"0", "false", "off", "no"}
+
+
+def start_automation_daemon(node: str, url: str, environment: dict[str, str]) -> subprocess.Popen[bytes] | None:
+    if not automation_enabled(environment):
+        return None
+    log = (ROOT / "terminal_automation.log").open("a", encoding="utf-8")
+    process = subprocess.Popen(
+        [node, str(ROOT / "scripts" / "automation_daemon.mjs"), f"--base-url={url}"],
+        cwd=ROOT,
+        env=environment,
+        stdout=log,
+        stderr=subprocess.STDOUT,
+        creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+    )
+    process._northstar_log = log  # type: ignore[attr-defined]
+    return process
+
+
+def stop_automation_daemon(process: subprocess.Popen[bytes] | None) -> None:
+    if process is None:
+        return
+    stop_process_tree(process)
+    log = getattr(process, "_northstar_log", None)
+    if log is not None:
+        log.close()
+
+
 def stop_process_tree(process: subprocess.Popen[bytes]) -> None:
     if process.poll() is not None:
         return
@@ -160,14 +190,17 @@ def main() -> int:
         active_port = abs(selected_port)
         url = f"http://localhost:{active_port}/"
         open_terminal(url)
+        automation_process = start_automation_daemon(node, url, environment)
         print(f"Trading Terminal уже запущен: {url}")
         print("Фоновая проверка виртуальных сделок включена: раз в минуту, независимо от открытой страницы.")
+        print("Автоматический поиск прогнозов включён: локальный сканер работает без открытой вкладки.")
         print("Для остановки фоновой проверки закройте это окно или нажмите Ctrl+C.")
         try:
             run_paper_evaluator(url, None, active_port)
         except KeyboardInterrupt:
             return 0
         finally:
+            stop_automation_daemon(automation_process)
             if bridge_process is not None:
                 stop_process_tree(bridge_process)
         return 0
@@ -197,14 +230,18 @@ def main() -> int:
                 if terminal_is_ready(port):
                     threading.Thread(target=run_paper_evaluator, args=(url, process, port), daemon=True).start()
                     open_terminal(url)
+                    automation_process = start_automation_daemon(node, url, environment)
                     print(f"Trading Terminal открыт: {url}")
                     print("Фоновая проверка виртуальных сделок включена: раз в минуту, независимо от открытой страницы.")
+                    print("Автоматический поиск прогнозов включён: локальный сканер работает без открытой вкладки.")
                     print("Для остановки закройте это окно или нажмите Ctrl+C.")
                     try:
                         return process.wait()
                     except KeyboardInterrupt:
                         stop_process_tree(process)
                         return 0
+                    finally:
+                        stop_automation_daemon(automation_process)
                 if process.poll() is not None:
                     print(f"Сервер не запустился. Подробности: {log_path}")
                     return process.returncode or 1

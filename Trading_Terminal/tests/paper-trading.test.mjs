@@ -16,6 +16,7 @@ async function loadSimulator() {
     mergePaperPosition: loaded.mergePaperPosition,
     calculateManualPaperClose: loaded.calculateManualPaperClose,
     calculateManualPaperEntry: loaded.calculateManualPaperEntry,
+    calculateSignalPaperEntry: loaded.calculateSignalPaperEntry,
     paperEntryNetRewardRisk: loaded.paperEntryNetRewardRisk,
     calculateShadowForecastResult: loaded.calculateShadowForecastResult,
     hasContinuousExecutionHistory: loaded.hasContinuousExecutionHistory,
@@ -35,6 +36,31 @@ test("auto entry waits for a better price instead of opening a poor live reward/
     assert.equal(result.action, "WAIT_PRICE");
     assert.ok(result.economics.ratio < 1);
     assert.ok(result.bestRatio >= 1);
+  } finally {
+    await server.close();
+  }
+});
+
+test("READY paper entry preserves the forecast price while live execution remains a shadow diagnostic", async () => {
+  const { server, calculateSignalPaperEntry, assessPaperCandidateEntry } = await loadSimulator();
+  try {
+    const signalPrice = 6.086;
+    const targetPrice = 6.271153553631094;
+    const stopPrice = 5.904;
+    const execution = assessPaperCandidateEntry({
+      side: "LONG", markPrice: signalPrice, targetPrice, stopPrice,
+      feeBps: 10, slippageBps: 5,
+    });
+    assert.equal(execution.action, "WAIT_PRICE");
+    const entry = calculateSignalPaperEntry({
+      side: "LONG", signalPrice, targetPrice, stopPrice,
+      balance: 10_000, riskPerTradePct: 1, maxOpenPositions: 5,
+      feeBps: 10, quotePerUsdt: 80, lotSize: 10,
+    });
+    assert.equal(entry.entryPrice, signalPrice);
+    assert.ok(entry.quantity > 0);
+    assert.equal(entry.quantity % 10, 0);
+    assert.ok(entry.fees > 0);
   } finally {
     await server.close();
   }
