@@ -1,0 +1,15 @@
+{
+  "crypto": ["BTCUSDT", "ETHUSDT", "SOLUSDT", "TRXUSDT", "XRPUSDT"],
+  "stocks": [
+    "AMZN", "TSLA", "NFLX", "AMD", "CVNA", "HOOD", "COIN", "SMCI", "PANW", "COHR",
+    "BSX", "CMG", "LULU", "DASH", "LITE", "CRWD", "APP", "UBER", "NBIS", "SNDK"
+  ],
+  "moex": [
+    "LKOH", "SNGS", "SNGSP", "GAZP", "ROSN", "NVTK", "TATN", "TATNP", "SIBN", "BANEP",
+    "SBER", "SBERP", "T", "MOEX", "VTBR", "GMKN", "CHMF", "NLMK", "MAGN", "PLZL",
+    "ALRS", "RUAL", "YDEX", "MGNT", "OZON", "MTSS", "AFLT", "PHOR", "FLOT", "AFKS", "RAGR",
+    "SOFL", "POSI", "DIAS", "WUSH", "HHEAD", "MTLR", "MTLRP", "RASP", "UGLD", "SELG",
+    "VSMO", "TRMK", "SVAV", "KMAZ", "PIKK", "SMLT", "LSRG", "ETLN", "HNFG", "AQUA", "APTK",
+    "IRAO", "HYDR", "FEES", "MSNG", "OGKB", "TGKN", "FESH", "NMTP"
+  ]
+}

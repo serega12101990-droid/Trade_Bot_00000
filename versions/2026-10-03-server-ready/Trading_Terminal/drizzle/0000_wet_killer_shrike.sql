@@ -1,0 +1,43 @@
+CREATE TABLE `forecast_journal` (
+	`id` text PRIMARY KEY NOT NULL,
+	`model_version` text NOT NULL,
+	`symbol` text NOT NULL,
+	`market` text NOT NULL,
+	`timeframe` text NOT NULL,
+	`asof_time` integer NOT NULL,
+	`due_time` integer NOT NULL,
+	`status` text DEFAULT 'PENDING' NOT NULL,
+	`primary_direction` text NOT NULL,
+	`primary_weight` real NOT NULL,
+	`bull_weight` real NOT NULL,
+	`sideways_weight` real NOT NULL,
+	`bear_weight` real NOT NULL,
+	`current_price` real NOT NULL,
+	`target_price` real NOT NULL,
+	`invalidation_price` real NOT NULL,
+	`horizon_bars` integer NOT NULL,
+	`bias_score` integer NOT NULL,
+	`atr` real NOT NULL,
+	`historical_samples` integer NOT NULL,
+	`similar_outcome_rate` real,
+	`drivers_json` text NOT NULL,
+	`features_json` text NOT NULL,
+	`forecast_json` text NOT NULL,
+	`created_at` text NOT NULL,
+	`evaluated_at` integer,
+	`evaluation_time` integer,
+	`actual_close` real,
+	`actual_direction` text,
+	`actual_return_pct` real,
+	`correct` integer,
+	`target_hit` integer,
+	`invalidation_hit` integer,
+	`first_touch` text,
+	`max_up_pct` real,
+	`max_down_pct` real,
+	`target_error_pct` real
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `idx_forecast_unique` ON `forecast_journal` (`model_version`,`symbol`,`timeframe`,`asof_time`);--> statement-breakpoint
+CREATE INDEX `idx_forecast_pending_due` ON `forecast_journal` (`status`,`due_time`);--> statement-breakpoint
+CREATE INDEX `idx_forecast_symbol_timeframe` ON `forecast_journal` (`symbol`,`timeframe`,`asof_time`);

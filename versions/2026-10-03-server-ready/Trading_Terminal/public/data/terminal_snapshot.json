@@ -1,0 +1,1323 @@
+{
+  "version": 1,
+  "mode": "LOCAL_READ_ONLY",
+  "generatedAt": "2026-10-03T20:08:25.562Z",
+  "marketDataSavedAt": null,
+  "assetCount": 85,
+  "assets": [
+    {
+      "symbol": "BTCUSDT",
+      "displaySymbol": "BTC/USDT",
+      "name": "Bitcoin",
+      "market": "crypto",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "ETHUSDT",
+      "displaySymbol": "ETH/USDT",
+      "name": "Ethereum",
+      "market": "crypto",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SOLUSDT",
+      "displaySymbol": "SOL/USDT",
+      "name": "Solana",
+      "market": "crypto",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "TRXUSDT",
+      "displaySymbol": "TRX/USDT",
+      "name": "TRON",
+      "market": "crypto",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "XRPUSDT",
+      "displaySymbol": "XRP/USDT",
+      "name": "XRP",
+      "market": "crypto",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "AMZN",
+      "displaySymbol": "AMZN",
+      "name": "Amazon",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "TSLA",
+      "displaySymbol": "TSLA",
+      "name": "Tesla",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "NFLX",
+      "displaySymbol": "NFLX",
+      "name": "Netflix",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "AMD",
+      "displaySymbol": "AMD",
+      "name": "Advanced Micro Devices",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "CVNA",
+      "displaySymbol": "CVNA",
+      "name": "Carvana Co.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "HOOD",
+      "displaySymbol": "HOOD",
+      "name": "Robinhood Markets, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "COIN",
+      "displaySymbol": "COIN",
+      "name": "Coinbase Global, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SMCI",
+      "displaySymbol": "SMCI",
+      "name": "Super Micro Computer, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "PANW",
+      "displaySymbol": "PANW",
+      "name": "Palo Alto Networks, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "COHR",
+      "displaySymbol": "COHR",
+      "name": "Coherent Corp.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "BSX",
+      "displaySymbol": "BSX",
+      "name": "Boston Scientific Corporation",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "CMG",
+      "displaySymbol": "CMG",
+      "name": "Chipotle Mexican Grill, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "LULU",
+      "displaySymbol": "LULU",
+      "name": "lululemon athletica inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "DASH",
+      "displaySymbol": "DASH",
+      "name": "DoorDash, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "LITE",
+      "displaySymbol": "LITE",
+      "name": "Lumentum Holdings Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "CRWD",
+      "displaySymbol": "CRWD",
+      "name": "CrowdStrike Holdings, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "APP",
+      "displaySymbol": "APP",
+      "name": "AppLovin Corporation",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "UBER",
+      "displaySymbol": "UBER",
+      "name": "Uber Technologies, Inc.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "NBIS",
+      "displaySymbol": "NBIS",
+      "name": "Nebius Group N.V.",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SNDK",
+      "displaySymbol": "SNDK",
+      "name": "SanDisk",
+      "market": "stocks",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "LKOH",
+      "displaySymbol": "LKOH",
+      "name": "Лукойл",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SNGS",
+      "displaySymbol": "SNGS",
+      "name": "Сургутнефтегаз",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SNGSP",
+      "displaySymbol": "SNGSP",
+      "name": "Сургутнефтегаз, привилегированные",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "GAZP",
+      "displaySymbol": "GAZP",
+      "name": "Газпром",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "ROSN",
+      "displaySymbol": "ROSN",
+      "name": "Роснефть",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "NVTK",
+      "displaySymbol": "NVTK",
+      "name": "НОВАТЭК",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "TATN",
+      "displaySymbol": "TATN",
+      "name": "Татнефть",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "TATNP",
+      "displaySymbol": "TATNP",
+      "name": "Татнефть, привилегированные",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SIBN",
+      "displaySymbol": "SIBN",
+      "name": "Газпром нефть",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "BANEP",
+      "displaySymbol": "BANEP",
+      "name": "Башнефть, привилегированные",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SBER",
+      "displaySymbol": "SBER",
+      "name": "Сбербанк",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SBERP",
+      "displaySymbol": "SBERP",
+      "name": "Сбербанк, привилегированные",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "T",
+      "displaySymbol": "T",
+      "name": "Т-Технологии",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "MOEX",
+      "displaySymbol": "MOEX",
+      "name": "Московская биржа",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "VTBR",
+      "displaySymbol": "VTBR",
+      "name": "ВТБ",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "GMKN",
+      "displaySymbol": "GMKN",
+      "name": "Норникель",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "CHMF",
+      "displaySymbol": "CHMF",
+      "name": "Северсталь",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "NLMK",
+      "displaySymbol": "NLMK",
+      "name": "НЛМК",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "MAGN",
+      "displaySymbol": "MAGN",
+      "name": "ММК",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "PLZL",
+      "displaySymbol": "PLZL",
+      "name": "Полюс",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "ALRS",
+      "displaySymbol": "ALRS",
+      "name": "Алроса",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "RUAL",
+      "displaySymbol": "RUAL",
+      "name": "РУСАЛ",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "YDEX",
+      "displaySymbol": "YDEX",
+      "name": "Яндекс",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "MGNT",
+      "displaySymbol": "MGNT",
+      "name": "Магнит",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "OZON",
+      "displaySymbol": "OZON",
+      "name": "Озон",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "MTSS",
+      "displaySymbol": "MTSS",
+      "name": "МТС",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "AFLT",
+      "displaySymbol": "AFLT",
+      "name": "Аэрофлот",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "PHOR",
+      "displaySymbol": "PHOR",
+      "name": "Фосагро",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "FLOT",
+      "displaySymbol": "FLOT",
+      "name": "Совкомфлот",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "AFKS",
+      "displaySymbol": "AFKS",
+      "name": "АФК Система",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "RAGR",
+      "displaySymbol": "RAGR",
+      "name": "Русагро",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SOFL",
+      "displaySymbol": "SOFL",
+      "name": "Софтлайн",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "POSI",
+      "displaySymbol": "POSI",
+      "name": "Группа Позитив",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "DIAS",
+      "displaySymbol": "DIAS",
+      "name": "Диасофт",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "WUSH",
+      "displaySymbol": "WUSH",
+      "name": "ВУШ Холдинг",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "HHEAD",
+      "displaySymbol": "HHEAD",
+      "name": "Хэдхантер",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "MTLR",
+      "displaySymbol": "MTLR",
+      "name": "Мечел",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "MTLRP",
+      "displaySymbol": "MTLRP",
+      "name": "Мечел, привилегированные",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "RASP",
+      "displaySymbol": "RASP",
+      "name": "Распадская",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "UGLD",
+      "displaySymbol": "UGLD",
+      "name": "Южуралзолото",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SELG",
+      "displaySymbol": "SELG",
+      "name": "Селигдар",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "VSMO",
+      "displaySymbol": "VSMO",
+      "name": "ВСМПО-АВИСМА",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "TRMK",
+      "displaySymbol": "TRMK",
+      "name": "ТМК",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SVAV",
+      "displaySymbol": "SVAV",
+      "name": "Соллерс",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "KMAZ",
+      "displaySymbol": "KMAZ",
+      "name": "КАМАЗ",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "PIKK",
+      "displaySymbol": "PIKK",
+      "name": "ПИК",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "SMLT",
+      "displaySymbol": "SMLT",
+      "name": "Самолет",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "LSRG",
+      "displaySymbol": "LSRG",
+      "name": "Группа ЛСР",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "ETLN",
+      "displaySymbol": "ETLN",
+      "name": "Эталон",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "HNFG",
+      "displaySymbol": "HNFG",
+      "name": "Хэндерсон",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "AQUA",
+      "displaySymbol": "AQUA",
+      "name": "Инарктика",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "APTK",
+      "displaySymbol": "APTK",
+      "name": "Аптечная сеть 36,6",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "IRAO",
+      "displaySymbol": "IRAO",
+      "name": "Интер РАО",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "HYDR",
+      "displaySymbol": "HYDR",
+      "name": "РусГидро",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "FEES",
+      "displaySymbol": "FEES",
+      "name": "Россети",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "MSNG",
+      "displaySymbol": "MSNG",
+      "name": "Мосэнерго",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "OGKB",
+      "displaySymbol": "OGKB",
+      "name": "ОГК-2",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "TGKN",
+      "displaySymbol": "TGKN",
+      "name": "ТГК-14",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "FESH",
+      "displaySymbol": "FESH",
+      "name": "ДВМП",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    },
+    {
+      "symbol": "NMTP",
+      "displaySymbol": "NMTP",
+      "name": "НМТП",
+      "market": "moex",
+      "quote": {
+        "price": null,
+        "changePct": null,
+        "high": null,
+        "low": null
+      },
+      "data": {},
+      "signal": null
+    }
+  ],
+  "strategies": [
+    {
+      "id": "legacy-macd",
+      "name": "MACD + EMA",
+      "shortName": "MACD",
+      "status": "active",
+      "statusLabel": "Рабочая логика",
+      "description": "Пересечения MACD 12/26/9, гистограмма и EMA 20/50/200.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "ema-corridor",
+      "name": "EMA‑окно · удержание границы",
+      "shortName": "EMA ОКНО",
+      "status": "research",
+      "statusLabel": "Отдельный сигнал",
+      "description": "Пробой или отбой от EMA50, удержание цены за границей и свободный маршрут к следующей EMA без MTF‑препятствий.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "ema-window-channel",
+      "name": "EMA‑окно · нисходящий ценовой канал",
+      "shortName": "КАНАЛ",
+      "status": "research",
+      "statusLabel": "Теневой анализ",
+      "description": "Ищет нисходящий параллельный канал после импульсного роста, тесты его границ и подтверждённый выход вниз. Не влияет на разрешение или блокировку сделок.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "mtf-entry",
+      "name": "SETUP → CONTEXT → ENTRY",
+      "shortName": "MTF",
+      "status": "research",
+      "statusLabel": "Не прошла отбор",
+      "description": "Старший сигнал, контекст MACD и точка входа на младшем ТФ.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "nison",
+      "name": "Свечные модели Нисона",
+      "shortName": "НИСОН",
+      "status": "draft",
+      "statusLabel": "Подтверждение",
+      "description": "Поглощение, харами, молот, падающая звезда и доджи.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "nison-beyond",
+      "name": "Нисон · За гранью японских свечей",
+      "shortName": "НИСОН+",
+      "status": "research",
+      "statusLabel": "Теневой анализ",
+      "description": "Контекст свечей и EMA; далее — индекс расхождения, трёхлинейный прорыв, ренко и каги. Не разрешает сделку до накопления статистики.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "impulse-zone",
+      "name": "Импульс и 50% свечи",
+      "shortName": "50%",
+      "status": "draft",
+      "statusLabel": "В разработке",
+      "description": "Зона проторговки полного диапазона длинной импульсной свечи.",
+      "enabled": false,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "vpa",
+      "name": "Объём и цена · VPA",
+      "shortName": "VPA",
+      "status": "research",
+      "statusLabel": "Теневое наблюдение",
+      "description": "Усилие объёма против результата свечи: импульс, слабый откат, поглощение, останавливающий объём и пробои. Пока не влияет на вход.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "level-action",
+      "name": "Уровни и сценарии Герчика",
+      "shortName": "УРОВЕНЬ",
+      "status": "research",
+      "statusLabel": "Теневой анализ",
+      "description": "Статические уровни, отбой, пробой и ложный пробой, свободный путь по ATR и расчёт R:R. Не смешивается с EMA‑коридором и пока не влияет на вход.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    },
+    {
+      "id": "scenario-forecast",
+      "name": "Сценарный прогноз",
+      "shortName": "ПРОГНОЗ",
+      "status": "research",
+      "statusLabel": "Историческая калибровка",
+      "description": "Три маршрута движения по EMA, MACD, объёму, свечам и старшим таймфреймам.",
+      "enabled": true,
+      "winRate": null,
+      "expectancy": null
+    }
+  ],
+  "tradeSummary": {
+    "count": 0,
+    "wins": 0,
+    "losses": 0,
+    "netPnlPct": 0,
+    "recent": []
+  },
+  "sources": {
+    "tradingProject": "Public source distribution; no private history",
+    "widget": "No private widget data",
+    "ordersEnabled": false
+  }
+}

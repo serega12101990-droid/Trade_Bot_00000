@@ -1,0 +1,33 @@
+# Explicit allowlist: no local SQLite, .dev.vars, .env, backups, audit outputs,
+# Git history, node_modules, or market/trading logs enter the build context.
+**
+!package.json
+!pnpm-lock.yaml
+!tsconfig.json
+!next.config.ts
+!postcss.config.mjs
+!vite.server.config.ts
+!cloudflare.d.ts
+!app
+!app/**
+!db
+!db/**
+!drizzle
+!drizzle/**
+!server
+!server/**
+!scripts
+!scripts/**
+!config
+!config/**
+!public
+!public/**
+!Dockerfile
+**/__pycache__/**
+**/*.pyc
+**/*.log
+**/.env*
+**/.dev.vars
+**/*.sqlite*
+**/*.key
+**/*.pem
